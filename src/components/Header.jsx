@@ -13,7 +13,7 @@ export default function Header({ stage, goHome, childName }) {
           >
             <Home size={24} />
           </button>
-          <h1 className="text-xl font-bold">Autism Early Screening Games</h1>
+          <h1 className="text-xl font-bold">Play2Screen</h1>
         </div>
         
         {childName && (

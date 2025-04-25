@@ -25,7 +25,7 @@ export default function Landing({ startGame, setChildName, setChildAge, childNam
     <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 px-4">
       <div className="max-w-lg w-full bg-white p-8 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold mb-4 text-blue-700 text-center">
-          Autism Early Screening Games
+        Play2Screen
         </h1>
         
         <p className="mb-6 text-gray-700 text-center">
