@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ProgressBar from "./ProgressBar";
 import { ChevronRight } from "lucide-react";
 
-// Images would be imported here
+
 import happyImage from "../assets/happyface.jpg";
 import sadImage from "../assets/sadface.jpg";
 import angryImage from "../assets/angryface.jpg";
@@ -12,7 +12,6 @@ import afraidImage from "../assets/afraidface.jpg";
 import disgustedImage from "../assets/disgustedface.jpg"
 
 
-// We'll use placeholder URLs for now
 const emotionImages = {
   happy: happyImage,
   sad: sadImage,

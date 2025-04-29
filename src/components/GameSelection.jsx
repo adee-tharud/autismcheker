@@ -32,6 +32,15 @@ export default function GameSelection({ startGame, results, resetProgress, child
       color: "bg-green-100 border-green-300",
       buttonColor: "bg-green-500 hover:bg-green-600",
       completed: results.social.completed
+    },
+    {
+      id: "focus",
+      name: "focus Recognition",
+      description: "Recognize foucs and response time",
+      icon: <Users size={32} className="text-red-500" />,
+      color: "bg-red-100 border-red-300",
+      buttonColor: "bg-red-500 hover:bg-red-600",
+      completed: results.focus.completed
     }
   ];
 

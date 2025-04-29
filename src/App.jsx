@@ -1,39 +1,3 @@
-// import React, { useState } from "react";
-// import Landing from "./components/Landing";
-// import EmotionGame from "./components/EmotionGame";
-// import Results from "./components/Results";
-
-// function App() {
-//   const [stage, setStage] = useState("landing");
-//   const [result, setResult] = useState({ score: 0, total: 0 });
-
-//   return (
-//     <>
-//       {stage === "landing" && (
-//         <Landing startGame={() => setStage("game")} />
-//       )}
-//       {stage === "game" && (
-//         <EmotionGame
-//           onFinish={(score, total) => {
-//             setResult({ score, total });
-//             setStage("results");
-//           }}
-//         />
-//       )}
-//       {stage === "results" && (
-//         <Results
-//           score={result.score}
-//           total={result.total}
-//           restart={() => setStage("landing")}
-//         />
-//       )}
-//     </>
-//   );
-// }
-
-// export default App;
-
-// App.jsx
 import React, { useState, useEffect } from "react";
 import Landing from "./components/Landing";
 import EmotionGame from "./components/EmotionGame";
@@ -43,6 +7,7 @@ import Results from "./components/Results";
 import GameSelection from "./components/GameSelection";
 import ProgressBar from "./components/ProgressBar";
 import Header from "./components/Header";
+import BubbleGame from "./components/BubbleGame";
 
 function App() {
   const [stage, setStage] = useState("landing");
@@ -51,7 +16,8 @@ function App() {
   const [allResults, setAllResults] = useState({
     emotion: { score: 0, total: 0, completed: false },
     attention: { score: 0, total: 0, completed: false },
-    social: { score: 0, total: 0, completed: false }
+    social: { score: 0, total: 0, completed: false },
+    focus: { score: 0, total: 0, completed: false }  // Fixed typo here from "foucs" to "focus"
   });
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
@@ -62,13 +28,36 @@ function App() {
     const savedChildInfo = localStorage.getItem('childInfo');
     
     if (savedResults) {
-      setAllResults(JSON.parse(savedResults));
+      try {
+        const parsedResults = JSON.parse(savedResults);
+        // Make sure all required game types exist in the loaded data
+        const validatedResults = {
+          emotion: parsedResults.emotion || { score: 0, total: 0, completed: false },
+          attention: parsedResults.attention || { score: 0, total: 0, completed: false },
+          social: parsedResults.social || { score: 0, total: 0, completed: false },
+          focus: parsedResults.focus || { score: 0, total: 0, completed: false }
+        };
+        setAllResults(validatedResults);
+      } catch (error) {
+        console.error("Error parsing saved results:", error);
+        // Reset to default if there's an error
+        setAllResults({
+          emotion: { score: 0, total: 0, completed: false },
+          attention: { score: 0, total: 0, completed: false },
+          social: { score: 0, total: 0, completed: false },
+          focus: { score: 0, total: 0, completed: false }
+        });
+      }
     }
     
     if (savedChildInfo) {
-      const info = JSON.parse(savedChildInfo);
-      setChildName(info.name);
-      setChildAge(info.age);
+      try {
+        const info = JSON.parse(savedChildInfo);
+        setChildName(info.name || "");
+        setChildAge(info.age || "");
+      } catch (error) {
+        console.error("Error parsing saved child info:", error);
+      }
     }
   }, []);
 
@@ -109,7 +98,8 @@ function App() {
     setAllResults({
       emotion: { score: 0, total: 0, completed: false },
       attention: { score: 0, total: 0, completed: false },
-      social: { score: 0, total: 0, completed: false }
+      social: { score: 0, total: 0, completed: false },
+      focus: { score: 0, total: 0, completed: false }  // Added focus game to reset
     });
     localStorage.removeItem('autismScreeningResults');
     setStage("landing");
@@ -162,7 +152,12 @@ function App() {
           childName={childName}
         />
       )}
-      
+      {stage === "game" && gameType === "focus" && (
+        <BubbleGame
+          onFinish={handleGameFinish}
+          childName={childName}
+        />
+      )}
       {stage === "results" && (
         <Results
           score={result.score}

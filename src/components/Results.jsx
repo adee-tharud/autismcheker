@@ -1,25 +1,3 @@
-// import React from "react";
-
-// export default function Results({ score, total, restart }) {
-//   return (
-//     <div className="flex flex-col items-center justify-center h-screen bg-green-50">
-//       <h2 className="text-3xl font-bold mb-4">Results</h2>
-//       <p className="mb-4 text-lg">
-//         You identified {score} out of {total} emotions correctly!
-//       </p>
-//       <p className="mb-8 text-gray-700">
-//         This is a screening tool and not a diagnosis. If you have concerns, please consult a professional.
-//       </p>
-//       <button
-//         onClick={restart}
-//         className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
-//       >
-//         Play Again
-//       </button>
-//     </div>
-//   );
-// }
-
 import React from "react";
 import { Home, BarChart2, ArrowRight, Repeat } from "lucide-react";
 
@@ -48,6 +26,11 @@ function getGameFeedback(gameType, scoreCategory) {
       high: "Shows good understanding of appropriate social responses and interactions.",
       medium: "Developing understanding of social situations - sometimes identifies appropriate responses.",
       low: "May benefit from additional support with understanding social situations and responses."
+    },
+    focus: {
+      high: "Shows excellent focus and hand-eye coordination - able to track and interact with moving targets effectively.",
+      medium: "Developing focus and tracking skills - sometimes able to respond quickly to visual stimuli.",
+      low: "May benefit from activities that build visual tracking, focus, and response time skills."
     }
   };
   
@@ -82,7 +65,8 @@ export default function Results({
   const gameNames = {
     emotion: "Emotion Recognition",
     attention: "Attention & Focus",
-    social: "Social Understanding"
+    social: "Social Understanding",
+    focus: "Visual Tracking & Response"
   };
   
   return (
@@ -146,7 +130,7 @@ export default function Results({
               <div className="space-y-3">
                 {Object.entries(allResults).map(([game, result]) => (
                   <div key={game} className="flex justify-between items-center">
-                    <span className="text-sm">{gameNames[game]}:</span>
+                    <span className="text-sm">{gameNames[game] || game}:</span>
                     <div className="flex items-center">
                       <div className="bg-gray-200 w-24 h-2 rounded-full overflow-hidden mr-2">
                         <div 
